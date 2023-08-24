@@ -23,11 +23,11 @@ char *which_location(char *command)
 	while (token_p != NULL)
 	{
 		path_len = _strlen(token_p);
-		created_path = malloc(2 + path_len + cmd_len); /*mem for created file path*/
-		_strcpy(created_path, token_p); /*copy the path token into the new memory and*/
-		_strcat(created_path, "/"); /*append /, command name and null byte*/
+		created_path = malloc(2 + path_len + cmd_len);
+		_strcpy(created_path, token_p);
+		_strcat(created_path, "/");/*append /, command name and null byte*/
 		_strcat(created_path, command);
-		/*_strcat(created_path, "\0");*/
+		_strcat(created_path, "\0");
 
 		if (stat(created_path, &buff) == 0)
 		{
