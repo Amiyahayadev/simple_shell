@@ -54,39 +54,40 @@ int exec_builtins(char **av)
 int exec_external(char **av, char **env, char *prog_name)
 {
 	int status;
-    char *exact_path;
-    pid_t pid;
+	char *exact_path;
+	pid_t pid;
 
-    exact_path = which_location(av[0]); /*generate path*/
-    if (exact_path)
-    {
-	    pid = fork();
-	    if (pid == -1)
-	    {
-		    perror(prog_name);
-		    return (-1);
-	    }
-	    if (pid == 0)
-	    {
-		    if (execve(exact_path, av, env) == -1)
-		    {
-			    perror(prog_name);
-			    exit(2);
-		    }
-	    }
-	    else
-	    {
-		    if (wait(&status) == -1)
-		    {
-			    perror(prog_name);
-			    exit(1);
-		    }
-	    }
-    }
-    else
-    {
-	    perror(prog_name);
-	    return (-1);
-    }
-    return (1);
+	exact_path = which_location(av[0]); /*generate path*/
+
+	if (exact_path)
+	{
+		pid = fork();
+		if (pid == -1)
+		{
+			perror(prog_name);
+			return (-1);
+		}
+		if (pid == 0)
+		{
+			if (execve(exact_path, av, env) == -1)
+			{
+				perror(prog_name);
+				exit(2);
+			}
+		}
+		else
+		{
+			if (wait(&status) == -1)
+			{
+				perror(prog_name);
+				exit(1);
+			}
+		}
+	}
+	else
+	{
+		perror(prog_name);
+		return (-1);
+	}
+	return (1);
 }
