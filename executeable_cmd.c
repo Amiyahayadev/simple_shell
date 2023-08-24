@@ -89,5 +89,6 @@ int exec_external(char **av, char **env, char *prog_name)
 		perror(prog_name);
 		return (-1);
 	}
+	free(exact_path);
 	return (1);
 }
